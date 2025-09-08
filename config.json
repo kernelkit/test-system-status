@@ -1,0 +1,21 @@
+{
+  "repositories": [
+    {
+      "name": "Infix",
+      "owner": "kernelkit",
+      "repo": "infix",
+      "branch": "main",
+      "enabled": true
+    }
+  ],
+  "settings": {
+    "refreshInterval": 300,
+    "github": {
+      "token": "<GITHUB_TOKEN>"
+    },
+    "display": {
+      "itemsPerPage": 6,
+      "resolution": "800x480"
+    }
+  }
+}
