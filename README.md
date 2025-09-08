@@ -1,6 +1,6 @@
 # Repository Status Dashboard
 
-A web-based dashboard for monitoring CI/CD status checks across multiple GitHub repositories and branches. Optimized for 800x480 resolution displays.
+A web-based dashboard for monitoring CI/CD status checks across multiple GitHub repositories and branches.
 
 ## Features
 
