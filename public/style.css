@@ -4,12 +4,54 @@
     box-sizing: border-box;
 }
 
+/* CSS Variables for theming */
+:root {
+    /* Dark theme (default) */
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #21262d;
+    --text-primary: #c9d1d9;
+    --text-secondary: #8b949e;
+    --text-accent: #58a6ff;
+    --text-light: #f0f6fc;
+    --border-primary: #30363d;
+    --border-accent: #0969da;
+    --success: #238636;
+    --failure: #da3633;
+    --warning: #f79c42;
+    --info: #8b5cf6;
+    --scrollbar-track: #0d1117;
+    --scrollbar-thumb: #30363d;
+    --scrollbar-thumb-hover: #484f58;
+}
+
+/* Light theme */
+body[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --bg-tertiary: #ffffff;
+    --text-primary: #24292f;
+    --text-secondary: #656d76;
+    --text-accent: #0969da;
+    --text-light: #24292f;
+    --border-primary: #d0d7de;
+    --border-accent: #0969da;
+    --success: #1a7f37;
+    --failure: #d1242f;
+    --warning: #bf8700;
+    --info: #8250df;
+    --scrollbar-track: #f6f8fa;
+    --scrollbar-thumb: #d0d7de;
+    --scrollbar-thumb-hover: #afb8c1;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #0d1117;
-    color: #c9d1d9;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-size: 14px;
     line-height: 1.4;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dashboard {
@@ -39,16 +81,17 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    background-color: #161b22;
-    border-bottom: 1px solid #30363d;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-primary);
     height: 40px;
     flex-shrink: 0;
+    transition: background-color 0.3s ease;
 }
 
 header h1 {
     font-size: 18px;
     font-weight: 600;
-    color: #f0f6fc;
+    color: var(--text-light);
 }
 
 .status-indicator {
@@ -56,22 +99,29 @@ header h1 {
     align-items: center;
     gap: 8px;
     font-size: 12px;
-    color: #8b949e;
+    color: var(--text-secondary);
 }
 
+#theme-toggle,
 #refresh-btn {
-    background: #21262d;
-    border: 1px solid #30363d;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
-    color: #c9d1d9;
+    color: var(--text-primary);
     padding: 4px 8px;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.2s;
 }
 
+#theme-toggle:hover,
 #refresh-btn:hover {
-    background: #30363d;
+    background: var(--border-primary);
+}
+
+#theme-toggle {
+    font-size: 16px;
+    padding: 2px 6px;
 }
 
 main {
@@ -125,8 +175,8 @@ main {
 }
 
 .repo-card {
-    background-color: #161b22;
-    border: 1px solid #30363d;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
     border-radius: 6px;
     padding: 12px;
     display: flex;
@@ -134,10 +184,11 @@ main {
     gap: 8px;
     min-height: 160px;
     position: relative;
+    transition: background-color 0.3s ease;
 }
 
 .repo-card.error {
-    border-color: #f85149;
+    border-color: var(--failure);
 }
 
 .repo-header {
@@ -149,22 +200,22 @@ main {
 .repo-title {
     font-weight: 600;
     font-size: 14px;
-    color: #58a6ff;
+    color: var(--text-accent);
 }
 
 .branch-badge {
-    background-color: #0969da;
+    background-color: var(--border-accent);
     color: #ffffff;
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 11px;
     font-weight: 500;
-    border: 1px solid #0969da;
+    border: 1px solid var(--border-accent);
 }
 
 .commit-info {
     font-size: 11px;
-    color: #8b949e;
+    color: var(--text-secondary);
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -172,12 +223,12 @@ main {
 
 .commit-info-minimal {
     font-size: 11px;
-    color: #8b949e;
+    color: var(--text-secondary);
 }
 
 .commit-message {
     font-weight: 500;
-    color: #c9d1d9;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -189,11 +240,11 @@ main {
     gap: 6px;
     font-size: 12px;
     font-weight: 500;
-    color: #c9d1d9;
+    color: var(--text-primary);
 }
 
 .repo-card.failed {
-    border-color: #f85149;
+    border-color: var(--failure);
 }
 
 .workflow-status {
@@ -211,20 +262,20 @@ main {
 }
 
 .status-dot.success {
-    background-color: #238636;
+    background-color: var(--success);
 }
 
 .status-dot.failure {
-    background-color: #da3633;
+    background-color: var(--failure);
 }
 
 .status-dot.pending {
-    background-color: #f79c42;
+    background-color: var(--warning);
     animation: pulse 1.5s ease-in-out infinite;
 }
 
 .status-dot.error {
-    background-color: #8b5cf6;
+    background-color: var(--info);
 }
 
 @keyframes pulse {
@@ -251,11 +302,11 @@ main {
     align-items: center;
     gap: 6px;
     padding: 2px 0;
-    color: #8b949e;
+    color: var(--text-secondary);
 }
 
 .check-item.failed {
-    color: #f85149;
+    color: var(--failure);
     font-weight: 500;
 }
 
@@ -269,14 +320,14 @@ main {
 
 .failed-step {
     font-size: 10px;
-    color: #8b949e;
+    color: var(--text-secondary);
     margin-left: 8px;
     margin-top: 2px;
 }
 
 .status-description {
     font-size: 10px;
-    color: #8b949e;
+    color: var(--text-secondary);
     margin-top: 2px;
     font-style: italic;
 }
@@ -284,7 +335,7 @@ main {
 .test-summary {
     margin-bottom: 8px;
     padding: 6px 0;
-    border-bottom: 1px solid #30363d;
+    border-bottom: 1px solid var(--border-primary);
 }
 
 .test-counts {
@@ -304,23 +355,23 @@ main {
 }
 
 .count-item.passed {
-    color: #238636;
-    background-color: rgba(35, 134, 54, 0.15);
+    color: var(--success);
+    background-color: color-mix(in srgb, var(--success) 15%, transparent);
 }
 
 .count-item.failed {
-    color: #f85149;
-    background-color: rgba(248, 81, 73, 0.15);
+    color: var(--failure);
+    background-color: color-mix(in srgb, var(--failure) 15%, transparent);
 }
 
 .count-item.pending {
-    color: #f79c42;
-    background-color: rgba(247, 156, 66, 0.15);
+    color: var(--warning);
+    background-color: color-mix(in srgb, var(--warning) 15%, transparent);
 }
 
 .count-item.cancelled {
-    color: #8b949e;
-    background-color: rgba(139, 148, 158, 0.15);
+    color: var(--text-secondary);
+    background-color: color-mix(in srgb, var(--text-secondary) 15%, transparent);
 }
 
 .test-detail {
@@ -341,31 +392,31 @@ main {
 
 .test-description {
     font-size: 10px;
-    color: #8b949e;
+    color: var(--text-secondary);
     margin-top: 1px;
     font-style: italic;
 }
 
 .failed-test-files {
     font-size: 10px;
-    color: #f85149;
+    color: var(--failure);
     margin-top: 2px;
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    background-color: rgba(248, 81, 73, 0.1);
+    background-color: color-mix(in srgb, var(--failure) 10%, transparent);
     padding: 2px 4px;
     border-radius: 3px;
     display: inline-block;
 }
 
 .error-message {
-    color: #f85149;
+    color: var(--failure);
     font-size: 11px;
     font-style: italic;
     margin-top: 8px;
     padding: 8px;
-    background-color: rgba(248, 81, 73, 0.1);
+    background-color: color-mix(in srgb, var(--failure) 10%, transparent);
     border-radius: 4px;
-    border: 1px solid rgba(248, 81, 73, 0.3);
+    border: 1px solid color-mix(in srgb, var(--failure) 30%, transparent);
 }
 
 .loading {
@@ -374,17 +425,18 @@ main {
     align-items: center;
     height: 100%;
     font-size: 16px;
-    color: #8b949e;
+    color: var(--text-secondary);
 }
 
 footer {
-    background-color: #161b22;
-    border-top: 1px solid #30363d;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-primary);
     padding: 8px 16px;
     height: 32px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    transition: background-color 0.3s ease;
 }
 
 .legend {
@@ -397,7 +449,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 4px;
-    color: #8b949e;
+    color: var(--text-secondary);
 }
 
 .last-updated {
@@ -405,7 +457,7 @@ footer {
     top: 8px;
     right: 8px;
     font-size: 10px;
-    color: #6e7681;
+    color: var(--text-secondary);
 }
 
 ::-webkit-scrollbar {
@@ -413,14 +465,14 @@ footer {
 }
 
 ::-webkit-scrollbar-track {
-    background: #0d1117;
+    background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #30363d;
+    background: var(--scrollbar-thumb);
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #484f58;
+    background: var(--scrollbar-thumb-hover);
 }

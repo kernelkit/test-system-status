@@ -1,6 +1,44 @@
 let refreshInterval;
 let config;
 
+// Theme management
+class ThemeManager {
+    constructor() {
+        this.theme = localStorage.getItem('theme') || 'dark';
+        this.applyTheme(this.theme);
+    }
+
+    init() {
+        this.updateToggleIcon(this.theme);
+    }
+
+    applyTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+        this.theme = theme;
+        localStorage.setItem('theme', theme);
+    }
+
+    toggleTheme() {
+        const newTheme = this.theme === 'dark' ? 'light' : 'dark';
+        this.applyTheme(newTheme);
+        this.updateToggleIcon(newTheme);
+        return newTheme;
+    }
+
+    updateToggleIcon(theme) {
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (toggleBtn) {
+            toggleBtn.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+    }
+
+    getCurrentTheme() {
+        return this.theme;
+    }
+}
+
+const themeManager = new ThemeManager();
+
 async function fetchConfig() {
     try {
         const response = await fetch('/api/config');
@@ -437,8 +475,15 @@ async function init() {
     await fetchConfig();
     await refreshData();
     startAutoRefresh();
+    themeManager.init();
+}
+
+// Global functions for HTML onclick handlers
+function toggleTheme() {
+    themeManager.toggleTheme();
 }
 
 document.addEventListener('DOMContentLoaded', init);
 
 window.refreshData = refreshData;
+window.toggleTheme = toggleTheme;
