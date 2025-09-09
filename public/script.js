@@ -4,7 +4,7 @@ let config;
 // Theme management
 class ThemeManager {
     constructor() {
-        this.theme = localStorage.getItem('theme') || 'dark';
+        this.theme = localStorage.getItem('theme') || 'light';
         this.applyTheme(this.theme);
     }
 
@@ -28,7 +28,7 @@ class ThemeManager {
     updateToggleIcon(theme) {
         const toggleBtn = document.getElementById('theme-toggle');
         if (toggleBtn) {
-            toggleBtn.textContent = theme === 'dark' ? '🌙' : '☀️';
+            toggleBtn.textContent = theme === 'light' ? '☀️' : '🌙';
         }
     }
 
@@ -183,17 +183,8 @@ function createRepositoryCard(repo) {
     
     const totalTests = allTests.length;
     
-    // Create test summary
-    const testSummaryHtml = totalTests > 0 ? `
-        <div class="test-summary">
-            <div class="test-counts">
-                ${testResults.passed > 0 ? `<span class="count-item passed">${testResults.passed} passed</span>` : ''}
-                ${testResults.failed > 0 ? `<span class="count-item failed">${testResults.failed} failed</span>` : ''}
-                ${testResults.pending > 0 ? `<span class="count-item pending">${testResults.pending} pending</span>` : ''}
-                ${testResults.cancelled > 0 ? `<span class="count-item cancelled">${testResults.cancelled} cancelled</span>` : ''}
-            </div>
-        </div>
-    ` : '';
+    // Create test summary (hide for compact display)
+    const testSummaryHtml = '';
     
     // Parse failed test details from descriptions, gist content, or job logs
     function parseFailedTests(description, testName, gistContent, jobLogs) {
@@ -349,35 +340,25 @@ function createRepositoryCard(repo) {
         return null;
     }
 
-    // Show ALL test systems with their status
+    // Show ALL test systems with their status in compact format
     const allTestsDetailHtml = allTests.length > 0 ? allTests.map(test => {
-        console.log(`Processing test: ${test.name}, has gistContent: ${!!test.gistContent}`);
-        const parsedFailures = parseFailedTests(test.description, test.name, test.gistContent, test.logs);
         const statusDot = test.status === 'failed' ? 'failure' : 
                          test.status === 'passed' ? 'success' : 
                          test.status === 'pending' ? 'pending' : 'error';
         
-        if (test.status === 'failed' && parsedFailures && parsedFailures.failedFiles.length > 0) {
-            return `
-                <div class="test-detail ${test.status}">
-                    <div class="status-dot ${statusDot}"></div>
-                    <div class="test-info">
-                        <div class="test-name">${parsedFailures.testSystem} failed tests:</div>
-                        <div class="failed-test-files">${parsedFailures.failedFiles.join(', ')}</div>
-                    </div>
-                </div>
-            `;
-        } else {
-            return `
-                <div class="test-detail ${test.status}">
-                    <div class="status-dot ${statusDot}"></div>
-                    <div class="test-info">
-                        <div class="test-name">${test.name}</div>
-                        ${test.status === 'failed' && test.description ? `<div class="test-description">${test.description}</div>` : ''}
-                    </div>
-                </div>
-            `;
-        }
+        // Clean up test name to be more readable
+        let displayName = test.name
+            .replace(/test-run-/, '')
+            .replace(/build-/, 'Build ')
+            .replace(/Regression Test /, 'Test ')
+            .replace(/Build infix/, 'Build Infix');
+        
+        return `
+            <div class="check-item ${test.status}">
+                <div class="status-dot ${statusDot}"></div>
+                <span>${displayName}</span>
+            </div>
+        `;
     }).join('') : '';
     
     const failedTestsHtml = allTestsDetailHtml;

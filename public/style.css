@@ -52,13 +52,89 @@ body {
     font-size: 14px;
     line-height: 1.4;
     transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Small screen optimizations */
+@media screen and (max-width: 800px), screen and (max-height: 480px) {
+    body {
+        font-size: 12px;
+        line-height: 1.3;
+    }
+    
+    .repo-title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    
+    .branch-badge {
+        font-size: 15px;
+        padding: 3px 7px;
+    }
+    
+    .commit-info,
+    .commit-info-minimal {
+        font-size: 14px;
+    }
+    
+    .status-summary {
+        font-size: 11px;
+    }
+    
+    .workflow-name {
+        font-size: 11px;
+    }
+    
+    .checks-list {
+        font-size: 16px;
+        line-height: 1.4;
+        overflow-y: visible;
+    }
+    
+    .check-item {
+        padding: 0;
+    }
+    
+    .test-summary {
+        margin-bottom: 1px;
+        padding: 0;
+        font-size: 8px;
+    }
+    
+    .count-item {
+        font-size: 10px;
+        padding: 1px 4px;
+    }
+    
+    .test-detail {
+        padding: 2px 0;
+        font-size: 10px;
+    }
+    
+    .failed-step {
+        font-size: 9px;
+    }
+    
+    .status-description {
+        font-size: 9px;
+    }
+    
+    .failed-test-files {
+        font-size: 9px;
+    }
+    
+    .error-message {
+        font-size: 10px;
+        padding: 6px;
+        margin-top: 6px;
+    }
 }
 
 .dashboard {
     width: 100vw;
     height: 100vh;
-    min-width: 800px;
-    min-height: 480px;
     max-width: 1920px;
     max-height: 1080px;
     margin: 0 auto;
@@ -67,12 +143,50 @@ body {
     overflow: hidden;
 }
 
-@media (max-width: 800px) {
+/* Optimized layout for exactly 800x480 screens */
+@media screen and (width: 800px) and (height: 480px), 
+       screen and (max-width: 800px) and (max-height: 480px) {
+    body {
+        overflow: hidden;
+    }
+    
     .dashboard {
-        width: 800px;
-        height: 480px;
-        min-width: 800px;
-        min-height: 480px;
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+    
+    main {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(100vh - 60px);
+        padding: 2px;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    main::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    
+    .repo-card {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    .repo-card::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    
+    .checks-list {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    .checks-list::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
     }
 }
 
@@ -86,6 +200,39 @@ header {
     height: 40px;
     flex-shrink: 0;
     transition: background-color 0.3s ease;
+}
+
+/* Compact header for small screens */
+@media screen and (max-width: 800px), screen and (max-height: 480px) {
+    header {
+        height: 32px;
+        padding: 4px 8px;
+    }
+    
+    header h1 {
+        font-size: 14px;
+        flex: 1;
+    }
+    
+    .status-indicator {
+        font-size: 10px;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+    
+    #theme-toggle,
+    #refresh-btn {
+        padding: 3px 5px;
+        font-size: 14px;
+        margin-left: 4px;
+        min-width: 24px;
+        min-height: 20px;
+    }
+    
+    #theme-toggle {
+        font-size: 14px;
+        padding: 2px 4px;
+    }
 }
 
 header h1 {
@@ -130,11 +277,30 @@ main {
     padding: 12px;
 }
 
+/* Compact main content for small screens */
+@media screen and (max-width: 800px), screen and (max-height: 480px) {
+    main {
+        padding: 8px;
+    }
+}
+
 .repositories {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     height: 100%;
+    overflow: hidden;
+}
+
+/* Optimized grid for small screens */
+@media screen and (max-width: 800px), screen and (max-height: 480px) {
+    .repositories {
+        gap: 3px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, minmax(85px, 1fr));
+        height: 100%;
+        max-height: 100%;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -181,10 +347,23 @@ main {
     padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    min-height: 160px;
+    gap: 6px;
+    min-height: 140px;
     position: relative;
     transition: background-color 0.3s ease;
+}
+
+/* Compact cards for small screens */
+@media screen and (max-width: 800px), screen and (max-height: 480px) {
+    .repo-card {
+        padding: 5px;
+        gap: 4px;
+        min-height: 120px;
+        border-radius: 3px;
+        font-size: 14px;
+        overflow-y: visible;
+        overflow-x: hidden;
+    }
 }
 
 .repo-card.error {
@@ -214,11 +393,11 @@ main {
 }
 
 .commit-info {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-secondary);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
 }
 
 .commit-info-minimal {
@@ -250,8 +429,8 @@ main {
 .workflow-status {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin: 4px 0;
+    gap: 4px;
+    margin: 2px 0;
 }
 
 .status-dot {
@@ -294,7 +473,8 @@ main {
 
 .checks-list {
     flex: 1;
-    font-size: 11px;
+    font-size: 8px;
+    display: block;
 }
 
 .check-item {
@@ -303,6 +483,8 @@ main {
     gap: 6px;
     padding: 2px 0;
     color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.4;
 }
 
 .check-item.failed {
@@ -333,9 +515,10 @@ main {
 }
 
 .test-summary {
-    margin-bottom: 8px;
-    padding: 6px 0;
+    margin-bottom: 3px;
+    padding: 2px 0;
     border-bottom: 1px solid var(--border-primary);
+    font-size: 10px;
 }
 
 .test-counts {
@@ -437,6 +620,23 @@ footer {
     display: flex;
     align-items: center;
     transition: background-color 0.3s ease;
+}
+
+/* Compact footer for small screens */
+@media screen and (max-width: 800px), screen and (max-height: 480px) {
+    footer {
+        height: 24px;
+        padding: 4px 12px;
+    }
+    
+    .legend {
+        gap: 12px;
+        font-size: 10px;
+    }
+    
+    .legend-item {
+        gap: 3px;
+    }
 }
 
 .legend {
